@@ -1,0 +1,11 @@
+PORT=4000
+MONGODB_URL=mongodb://localhost:27017/task-management
+NODE_ENV=development
+FRONTEND_ORIGIN=http://localhost:5173
+
+
+JWT_ACCESS_TOKEN_SECRET=your_access_secret_here
+JWT_ACCESS_TOKEN_EXP=15m
+
+JWT_REFRESH_TOKEN_SECRET=your_refresh_secret_here
+JWT_REFRESH_TOKEN_EXP=7d
