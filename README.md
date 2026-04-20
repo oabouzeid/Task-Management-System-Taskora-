@@ -1,4 +1,4 @@
-# TaskFlow 🗂️
+# Taskora 🗂️
 
 > A full-stack - Task Management System — organize your work with boards, lists, and tasks.
 
