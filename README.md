@@ -22,7 +22,7 @@
 
 ## 🧭 Overview
 
-TaskFlow is a full-stack task management platform . Users can create **boards**, organize work into **lists**, and manage **tasks** with statuses, due dates, comments, and activity logs.
+Taskora is a full-stack task management platform . Users can create **boards**, organize work into **lists**, and manage **tasks** with statuses, due dates, comments, and activity logs.
 
 The project is structured as a **monorepo** with a shared root `package.json` that runs both the backend and frontend concurrently with a single command.
 
