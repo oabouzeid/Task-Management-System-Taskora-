@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { apiClient } from '../apiClient';
 import { useToast } from '../ToastContext';
-import { Plus, MoreVertical, Trash2, CheckCircle, MessageSquare, User, Calendar, Edit3, X, ArrowRight, Activity, Users, UserPlus, UserMinus, Clock, Layout, ChevronRight } from 'lucide-react';
+import { Plus, MoreVertical, Trash2, CheckCircle, MessageSquare, User, Calendar, Edit3, X, ArrowRight, Activity, Users, UserPlus, UserMinus, Clock, Layout, ChevronRight, Filter } from 'lucide-react';
 
 const BoardDetail = () => {
   const { id } = useParams();
@@ -12,6 +12,7 @@ const BoardDetail = () => {
   const [lists, setLists] = useState([]);
   const [tasksByList, setTasksByList] = useState({});
   const [loading, setLoading] = useState(true);
+  const [filterStatus, setFilterStatus] = useState('all');
   
   // Modals / State for creation
   const [showListModal, setShowListModal] = useState(false);
@@ -34,7 +35,7 @@ const BoardDetail = () => {
 
   useEffect(() => {
     fetchBoardData();
-  }, [id]);
+  }, [id, filterStatus]);
 
   const fetchBoardData = async () => {
     try {
@@ -55,7 +56,11 @@ const BoardDetail = () => {
         // Fetch tasks for each list
         const tasksMap = {};
         for (const list of listsData) {
-            const taskRes = await apiClient.get(`/boards/${id}/lists/${list._id}/tasks`);
+            let url = `/boards/${id}/lists/${list._id}/tasks`;
+            if (filterStatus !== 'all') {
+                url += `?status=${filterStatus}`;
+            }
+            const taskRes = await apiClient.get(url);
             if (taskRes.ok) {
                 const data = await taskRes.json();
                 tasksMap[list._id] = data.tasks || [];
@@ -296,6 +301,18 @@ const BoardDetail = () => {
                 >
                   <UserPlus size={16} />
                 </button>
+            </div>
+            <div className="dropdown">
+                <button className="btn btn-outline-secondary rounded-pill px-3 py-2 small shadow-sm d-flex align-items-center gap-2 fw-bold bg-white glass" data-bs-toggle="dropdown">
+                    <Filter size={16} /> 
+                    {filterStatus === 'all' ? 'All Tasks' : filterStatus === 'todo' ? 'To Do' : filterStatus === 'inProgress' ? 'In Progress' : 'Done'}
+                </button>
+                <ul className="dropdown-menu dropdown-menu-end border-0 shadow-lg p-2 rounded-4">
+                    <li><button className={`dropdown-item rounded-3 small py-2 ${filterStatus === 'all' ? 'bg-primary-subtle text-primary fw-bold' : ''}`} onClick={() => setFilterStatus('all')}>All Tasks</button></li>
+                    <li><button className={`dropdown-item rounded-3 small py-2 ${filterStatus === 'todo' ? 'bg-info-subtle text-info fw-bold' : ''}`} onClick={() => setFilterStatus('todo')}>To Do</button></li>
+                    <li><button className={`dropdown-item rounded-3 small py-2 ${filterStatus === 'inProgress' ? 'bg-warning-subtle text-warning fw-bold' : ''}`} onClick={() => setFilterStatus('inProgress')}>In Progress</button></li>
+                    <li><button className={`dropdown-item rounded-3 small py-2 ${filterStatus === 'done' ? 'bg-success-subtle text-success fw-bold' : ''}`} onClick={() => setFilterStatus('done')}>Done</button></li>
+                </ul>
             </div>
             <button className="btn btn-primary rounded-pill px-4 py-2 small shadow-sm d-flex align-items-center gap-2 fw-bold" onClick={() => setShowListModal(true)}>
                 <Plus size={18} /> Add List

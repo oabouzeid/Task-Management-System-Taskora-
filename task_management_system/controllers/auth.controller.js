@@ -21,7 +21,7 @@ export const login = async (req, res, next) => {
     try {
         const { email, password } = req.body;
 
-        // fix from demo: was checking !email instead of !user
+        
         const user = await User.findOne({ email });
         if (!user) return next(new HttpError(401, "wrong email or password"));
 
@@ -46,7 +46,7 @@ export const login = async (req, res, next) => {
             expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
         });
 
-        // fix from demo: accessToken now returned correctly in the json body
+        
         return res
             .status(200)
             .cookie("refreshToken", refreshToken, {
@@ -85,7 +85,7 @@ export const logout = async (req, res, next) => {
 
         const storedToken = userTokens[matchedIndex];
 
-        // fix from demo: was RefreshToken, findByIdAndDelete (comma instead of dot)
+        
         await RefreshToken.findByIdAndDelete(storedToken._id);
 
         return res

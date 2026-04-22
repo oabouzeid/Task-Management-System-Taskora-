@@ -3,7 +3,7 @@ import List from "../models/list.js";
 import User from "../models/user.js";
 import HttpError from "../utils/httpError.js";
 
-// ─── Tasks ────────────────────────────────────────────────────────────────────
+//Tasks
 
 export const getAllTasks = async (req, res, next) => {
     try {
@@ -150,7 +150,7 @@ export const assignTask = async (req, res, next) => {
     }
 };
 
-// ─── Comments ─────────────────────────────────────────────────────────────────
+//Comments 
 
 export const createComment = async (req, res, next) => {
     try {

@@ -75,6 +75,14 @@ class ApiClient {
     });
   }
 
+  async put(endpoint, data, options = {}) {
+    return this.request(endpoint, {
+      ...options,
+      method: 'PUT',
+      body: JSON.stringify(data),
+    });
+  }
+
   async patch(endpoint, data, options = {}) {
     return this.request(endpoint, {
       ...options,

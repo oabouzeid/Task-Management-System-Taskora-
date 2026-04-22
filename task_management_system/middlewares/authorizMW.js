@@ -2,12 +2,12 @@ import HttpError from "../utils/httpError.js";
 import Board from "../models/board.js";
 import Task from "../models/task.js";
 
-// check user role (admin, user, etc.)
+// check user role 
 export const authoriz = (...roles) => {
     return (req, res, next) => {
         if (!req.user) return next(new HttpError(401, "authentication required"));
 
-        // fix from demo: was !roles.includes() — logic was inverted
+       
         if (!roles.includes(req.user.role))
             return next(new HttpError(403, "insufficient permissions"));
 

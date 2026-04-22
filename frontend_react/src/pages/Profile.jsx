@@ -26,7 +26,7 @@ const Profile = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      const response = await apiClient.put(`/users/${user._id}`, profileData);
+      const response = await apiClient.patch(`/users/${user._id}`, profileData);
       if (response.ok) {
         const data = await response.json();
         setUser(data.user);
